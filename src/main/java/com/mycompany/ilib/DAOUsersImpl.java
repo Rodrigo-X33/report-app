@@ -8,6 +8,8 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
 
+// some comment
+
 public class DAOUsersImpl extends Database implements DAOUsers {
 
     @Override

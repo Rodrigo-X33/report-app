@@ -16,7 +16,7 @@ public class DAOLendingsImpl extends Database implements DAOLendings {
     public void registrar(Lendings lending) throws Exception {
         try {
             this.Conectar();
-            PreparedStatement st = this.conexion.prepareStatement("INSERT INTO lendings(user_id, book_id, date_out) VALUES(?,?,?);");
+            PreparedStatement st = this.conexion.prepareStatement("INSERT INTO lendings(user_id, book_id, date_out) VALUES(?,?,?)");
             st.setInt(1, lending.getUser_id());
             st.setInt(2, lending.getBook_id());
             st.setString(3, lending.getDate_out());
@@ -86,7 +86,7 @@ public class DAOLendingsImpl extends Database implements DAOLendings {
             this.Conectar();
             PreparedStatement st = this.conexion.prepareStatement("SELECT * FROM lendings ORDER BY id DESC");
             
-            lista = new ArrayList();
+            lista = new ArrayList<>();
             ResultSet rs = st.executeQuery();
             while(rs.next()) {
                 Lendings lending = new Lendings();

@@ -14,7 +14,7 @@ public class DAOBooksImpl extends Database implements DAOBooks {
     public void registrar(Books book) throws Exception {
         try {
             this.Conectar();
-            PreparedStatement st = this.conexion.prepareStatement("INSERT INTO books(title, date, author, category, edit, lang, pages, description, ejemplares, stock, available) VALUES(?,?,?,?,?,?,?,?,?,?,?);");
+            PreparedStatement st = this.conexion.prepareStatement("INSERT INTO books(title, date, author, category, edit, lang, pages, description, ejemplares, stock, available) VALUES(?,?,?,?,?,?,?,?,?,?,?)");
             st.setString(1, book.getTitle());
             st.setString(2, book.getDate());
             st.setString(3, book.getAuthor());
@@ -65,7 +65,7 @@ public class DAOBooksImpl extends Database implements DAOBooks {
     public void eliminar(int bookId) throws Exception {
         try {
             this.Conectar();
-            PreparedStatement st = this.conexion.prepareStatement("DELETE FROM books WHERE id = ?;");
+            PreparedStatement st = this.conexion.prepareStatement("DELETE FROM books WHERE id = ?");
             st.setInt(1, bookId);
             st.executeUpdate();
             st.close();
@@ -81,10 +81,13 @@ public class DAOBooksImpl extends Database implements DAOBooks {
         List<Books> lista = null;
         try {
             this.Conectar();
-            String Query = title.isEmpty() ? "SELECT * FROM books;" : "SELECT * FROM books WHERE title LIKE '%" + title + "%';";
+            String Query = title.isEmpty() ? "SELECT * FROM books" : "SELECT * FROM books WHERE title ILIKE ?";
             PreparedStatement st = this.conexion.prepareStatement(Query);
+            if (!title.isEmpty()) {
+                st.setString(1, "%" + title + "%");
+            }
             
-            lista = new ArrayList();
+            lista = new ArrayList<>();
             ResultSet rs = st.executeQuery();
             while(rs.next()) {
                 Books book = new Books();
@@ -118,7 +121,7 @@ public class DAOBooksImpl extends Database implements DAOBooks {
         
         try {
             this.Conectar();
-            PreparedStatement st = this.conexion.prepareStatement("SELECT * FROM books WHERE id = ? LIMIT 1;");
+            PreparedStatement st = this.conexion.prepareStatement("SELECT * FROM books WHERE id = ? LIMIT 1");
             st.setInt(1, bookId);
             
             ResultSet rs = st.executeQuery();

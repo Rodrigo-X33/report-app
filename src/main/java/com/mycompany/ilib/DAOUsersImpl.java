@@ -16,7 +16,7 @@ public class DAOUsersImpl extends Database implements DAOUsers {
     public void registrar(Users user) throws Exception {
         try {
             this.Conectar();
-            PreparedStatement st = this.conexion.prepareStatement("INSERT INTO users(name, last_name_p, last_name_m, domicilio, tel) VALUES(?,?,?,?,?);");
+                PreparedStatement st = this.conexion.prepareStatement("INSERT INTO users(name, last_name_p, last_name_m, domicilio, tel) VALUES(?,?,?,?,?)");
             st.setString(1, user.getName());
             st.setString(2, user.getLast_name_p());
             st.setString(3, user.getLast_name_m());
@@ -35,7 +35,7 @@ public class DAOUsersImpl extends Database implements DAOUsers {
     public void modificar(Users user) throws Exception {
         try {
             this.Conectar();
-            PreparedStatement st = this.conexion.prepareStatement("UPDATE users SET name = ?, last_name_p = ?, last_name_m = ?, domicilio = ?, tel = ? WHERE id = ?");
+                PreparedStatement st = this.conexion.prepareStatement("UPDATE users SET name = ?, last_name_p = ?, last_name_m = ?, domicilio = ?, tel = ? WHERE id = ?");
             st.setString(1, user.getName());
             st.setString(2, user.getLast_name_p());
             st.setString(3, user.getLast_name_m());
@@ -55,7 +55,7 @@ public class DAOUsersImpl extends Database implements DAOUsers {
     public void eliminar(int userId) throws Exception {
         try {
             this.Conectar();
-            PreparedStatement st = this.conexion.prepareStatement("DELETE FROM users WHERE id = ?;");
+                PreparedStatement st = this.conexion.prepareStatement("DELETE FROM users WHERE id = ?");
             st.setInt(1, userId);
             st.executeUpdate();
             st.close();
@@ -71,10 +71,13 @@ public class DAOUsersImpl extends Database implements DAOUsers {
         List<Users> lista = null;
         try {
             this.Conectar();
-            String Query = name.isEmpty() ? "SELECT * FROM users;" : "SELECT * FROM users WHERE name LIKE '%" + name + "%';";
+                String Query = name.isEmpty() ? "SELECT * FROM users" : "SELECT * FROM users WHERE name ILIKE ?";
             PreparedStatement st = this.conexion.prepareStatement(Query);
+                if (!name.isEmpty()) {
+                    st.setString(1, "%" + name + "%");
+                }
             
-            lista = new ArrayList();
+            lista = new ArrayList<>();
             ResultSet rs = st.executeQuery();
             while(rs.next()) {
                 Users user = new Users();
@@ -104,7 +107,7 @@ public class DAOUsersImpl extends Database implements DAOUsers {
         
         try {
             this.Conectar();
-            PreparedStatement st = this.conexion.prepareStatement("SELECT * FROM users WHERE id = ? LIMIT 1;");
+                PreparedStatement st = this.conexion.prepareStatement("SELECT * FROM users WHERE id = ? LIMIT 1");
             st.setInt(1, userId);
             
             ResultSet rs = st.executeQuery();

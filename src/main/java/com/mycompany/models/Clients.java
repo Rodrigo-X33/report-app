@@ -1,6 +1,6 @@
 package com.mycompany.models;
 
-public class Customers {
+public class Clients {
     private int id;
     private String name;
     private String email;

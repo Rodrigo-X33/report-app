@@ -257,7 +257,7 @@ public class Dashboard extends javax.swing.JFrame {
         btn_customers.setInheritsPopupMenu(true);
         btn_customers.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                ShowJPanel(new CustomersList());
+                ShowJPanel(new ClientsList());
             }
         });
 

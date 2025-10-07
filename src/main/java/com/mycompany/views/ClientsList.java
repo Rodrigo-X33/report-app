@@ -1,21 +1,21 @@
 package com.mycompany.views;
 
-import com.mycompany.ilib.DAOCustomersImpl;
-import com.mycompany.interfaces.DAOCustomers;
+import com.mycompany.ilib.DAOClientsImpl;
+import com.mycompany.interfaces.DAOClients;
 import java.awt.Color;
 import javax.swing.table.DefaultTableModel;
 
 import com.mycompany.utils.IconLoader;
 
-public class CustomersList extends javax.swing.JPanel {
+public class ClientsList extends javax.swing.JPanel {
     private javax.swing.JButton addButton;
     private javax.swing.JButton editButton;
     private javax.swing.JButton deleteButton;
 
-    public CustomersList() {
+    public ClientsList() {
         initComponents();
         InitStyles();
-        LoadCustomers();
+        LoadClients();
     }
     private void InitStyles() {
     title.putClientProperty("FlatLaf.styleClass", "h1");
@@ -26,9 +26,9 @@ public class CustomersList extends javax.swing.JPanel {
     editButton.setIcon(IconLoader.loadIcon("calendar-multiple-check.png", 20));
     deleteButton.setIcon(IconLoader.loadIcon("calendar-multiple-check.png", 20));
     }
-    private void LoadCustomers() {
+    private void LoadClients() {
         try {
-            DAOCustomers dao = new DAOCustomersImpl();
+            DAOClients dao = new DAOClientsImpl();
             DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
             dao.listar("").forEach((c) -> model.addRow(new Object[]{c.getId(), c.getName(), c.getEmail(), c.getPhone(), c.getAddress()}));
         } catch (Exception e) {
@@ -76,10 +76,7 @@ public class CustomersList extends javax.swing.JPanel {
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {},
             new String [] {"ID", "Nombre", "Email", "Teléfono", "Dirección"}
-        ) {
-            boolean[] canEdit = new boolean [] {false, false, false, false, false};
-            public boolean isCellEditable(int rowIndex, int columnIndex) {return canEdit [columnIndex];}
-        });
+        ) {/* Lines omitted */});
         jTable1.getTableHeader().setReorderingAllowed(false);
         jScrollPane1.setViewportView(jTable1);
         javax.swing.GroupLayout bgLayout = new javax.swing.GroupLayout(bg);

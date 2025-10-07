@@ -1,23 +1,23 @@
 package com.mycompany.ilib;
 
 import com.mycompany.db.Database;
-import com.mycompany.interfaces.DAOCustomers;
-import com.mycompany.models.Customers;
+import com.mycompany.interfaces.DAOClients;
+import com.mycompany.models.Clients;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
 
-public class DAOCustomersImpl extends Database implements DAOCustomers {
+public class DAOClientsImpl extends Database implements DAOClients {
     @Override
-    public void registrar(Customers customer) throws Exception {
+    public void registrar(Clients client) throws Exception {
         try {
             this.Conectar();
-            PreparedStatement st = this.conexion.prepareStatement("INSERT INTO customers(name, email, phone, address) VALUES(?,?,?,?)");
-            st.setString(1, customer.getName());
-            st.setString(2, customer.getEmail());
-            st.setString(3, customer.getPhone());
-            st.setString(4, customer.getAddress());
+            PreparedStatement st = this.conexion.prepareStatement("INSERT INTO clients(name, email, phone, address) VALUES(?,?,?,?)");
+            st.setString(1, client.getName());
+            st.setString(2, client.getEmail());
+            st.setString(3, client.getPhone());
+            st.setString(4, client.getAddress());
             st.executeUpdate();
             st.close();
         } finally {
@@ -26,15 +26,15 @@ public class DAOCustomersImpl extends Database implements DAOCustomers {
     }
 
     @Override
-    public void modificar(Customers customer) throws Exception {
+    public void modificar(Clients client) throws Exception {
         try {
             this.Conectar();
-            PreparedStatement st = this.conexion.prepareStatement("UPDATE customers SET name=?, email=?, phone=?, address=? WHERE id=?");
-            st.setString(1, customer.getName());
-            st.setString(2, customer.getEmail());
-            st.setString(3, customer.getPhone());
-            st.setString(4, customer.getAddress());
-            st.setInt(5, customer.getId());
+            PreparedStatement st = this.conexion.prepareStatement("UPDATE clients SET name=?, email=?, phone=?, address=? WHERE id=?");
+            st.setString(1, client.getName());
+            st.setString(2, client.getEmail());
+            st.setString(3, client.getPhone());
+            st.setString(4, client.getAddress());
+            st.setInt(5, client.getId());
             st.executeUpdate();
             st.close();
         } finally {
@@ -43,11 +43,11 @@ public class DAOCustomersImpl extends Database implements DAOCustomers {
     }
 
     @Override
-    public void eliminar(int customerId) throws Exception {
+    public void eliminar(int clientId) throws Exception {
         try {
             this.Conectar();
-            PreparedStatement st = this.conexion.prepareStatement("DELETE FROM customers WHERE id=?");
-            st.setInt(1, customerId);
+            PreparedStatement st = this.conexion.prepareStatement("DELETE FROM clients WHERE id=?");
+            st.setInt(1, clientId);
             st.executeUpdate();
             st.close();
         } finally {
@@ -56,18 +56,18 @@ public class DAOCustomersImpl extends Database implements DAOCustomers {
     }
 
     @Override
-    public List<Customers> listar(String name) throws Exception {
-        List<Customers> lista = new ArrayList<>();
+    public List<Clients> listar(String name) throws Exception {
+        List<Clients> lista = new ArrayList<>();
         try {
             this.Conectar();
-            String query = name == null || name.isEmpty() ? "SELECT * FROM customers" : "SELECT * FROM customers WHERE name ILIKE ?";
+            String query = name == null || name.isEmpty() ? "SELECT * FROM clients" : "SELECT * FROM clients WHERE name ILIKE ?";
             PreparedStatement st = this.conexion.prepareStatement(query);
             if (name != null && !name.isEmpty()) {
                 st.setString(1, "%" + name + "%");
             }
             ResultSet rs = st.executeQuery();
             while (rs.next()) {
-                Customers c = new Customers();
+                Clients c = new Clients();
                 c.setId(rs.getInt("id"));
                 c.setName(rs.getString("name"));
                 c.setEmail(rs.getString("email"));
@@ -84,15 +84,15 @@ public class DAOCustomersImpl extends Database implements DAOCustomers {
     }
 
     @Override
-    public Customers getCustomerById(int customerId) throws Exception {
-        Customers c = null;
+    public Clients getClientById(int clientId) throws Exception {
+        Clients c = null;
         try {
             this.Conectar();
-            PreparedStatement st = this.conexion.prepareStatement("SELECT * FROM customers WHERE id=?");
-            st.setInt(1, customerId);
+            PreparedStatement st = this.conexion.prepareStatement("SELECT * FROM clients WHERE id=?");
+            st.setInt(1, clientId);
             ResultSet rs = st.executeQuery();
             if (rs.next()) {
-                c = new Customers();
+                c = new Clients();
                 c.setId(rs.getInt("id"));
                 c.setName(rs.getString("name"));
                 c.setEmail(rs.getString("email"));

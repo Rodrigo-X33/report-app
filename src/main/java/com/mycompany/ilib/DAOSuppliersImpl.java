@@ -13,11 +13,10 @@ public class DAOSuppliersImpl extends Database implements DAOSuppliers {
     public void registrar(Suppliers supplier) throws Exception {
         try {
             this.Conectar();
-            PreparedStatement st = this.conexion.prepareStatement("INSERT INTO suppliers(name, email, phone, address) VALUES(?,?,?,?)");
+            PreparedStatement st = this.conexion.prepareStatement("INSERT INTO suppliers(name, email, phone) VALUES(?,?,?)");
             st.setString(1, supplier.getName());
             st.setString(2, supplier.getEmail());
             st.setString(3, supplier.getPhone());
-            st.setString(4, supplier.getAddress());
             st.executeUpdate();
             st.close();
         } finally {
@@ -29,12 +28,11 @@ public class DAOSuppliersImpl extends Database implements DAOSuppliers {
     public void modificar(Suppliers supplier) throws Exception {
         try {
             this.Conectar();
-            PreparedStatement st = this.conexion.prepareStatement("UPDATE suppliers SET name=?, email=?, phone=?, address=? WHERE id=?");
+            PreparedStatement st = this.conexion.prepareStatement("UPDATE suppliers SET name=?, email=?, phone=? WHERE id=?");
             st.setString(1, supplier.getName());
             st.setString(2, supplier.getEmail());
             st.setString(3, supplier.getPhone());
-            st.setString(4, supplier.getAddress());
-            st.setInt(5, supplier.getId());
+            st.setInt(4, supplier.getId());
             st.executeUpdate();
             st.close();
         } finally {
@@ -72,7 +70,6 @@ public class DAOSuppliersImpl extends Database implements DAOSuppliers {
                 s.setName(rs.getString("name"));
                 s.setEmail(rs.getString("email"));
                 s.setPhone(rs.getString("phone"));
-                s.setAddress(rs.getString("address"));
                 lista.add(s);
             }
             rs.close();
@@ -97,7 +94,6 @@ public class DAOSuppliersImpl extends Database implements DAOSuppliers {
                 s.setName(rs.getString("name"));
                 s.setEmail(rs.getString("email"));
                 s.setPhone(rs.getString("phone"));
-                s.setAddress(rs.getString("address"));
             }
             rs.close();
             st.close();

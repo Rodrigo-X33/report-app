@@ -30,7 +30,7 @@ public class SuppliersList extends javax.swing.JPanel {
         try {
             DAOSuppliers dao = new DAOSuppliersImpl();
             DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
-            dao.listar("").forEach((s) -> model.addRow(new Object[]{s.getId(), s.getName(), s.getEmail(), s.getPhone(), s.getAddress()}));
+            dao.listar("").forEach((s) -> model.addRow(new Object[]{s.getId(), s.getName(), s.getEmail(), s.getPhone()}));
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
@@ -75,9 +75,9 @@ public class SuppliersList extends javax.swing.JPanel {
         jTable1.setFont(new java.awt.Font("Segoe UI", 0, 11));
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {},
-            new String [] {"ID", "Nombre", "Email", "Teléfono", "Dirección"}
+            new String [] {"ID", "Nombre", "Email", "Teléfono"}
         ) {
-            boolean[] canEdit = new boolean [] {false, false, false, false, false};
+            boolean[] canEdit = new boolean [] {false, false, false, false};
             public boolean isCellEditable(int rowIndex, int columnIndex) {return canEdit [columnIndex];}
         });
         jTable1.getTableHeader().setReorderingAllowed(false);

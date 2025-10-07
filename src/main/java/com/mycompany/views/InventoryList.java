@@ -30,7 +30,7 @@ public class InventoryList extends javax.swing.JPanel {
         try {
             DAOInventoryProducts dao = new DAOInventoryProductsImpl();
             DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
-            dao.listar("").forEach((p) -> model.addRow(new Object[]{p.getId(), p.getProductName(), p.getDescription(), p.getStock(), p.getPrice(), p.getSupplierId()}));
+            dao.listar("").forEach((p) -> model.addRow(new Object[]{p.getId(), p.getProductName(), p.getStock(), p.getPrice(), p.getSupplierId()}));
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
@@ -75,9 +75,9 @@ public class InventoryList extends javax.swing.JPanel {
         jTable1.setFont(new java.awt.Font("Segoe UI", 0, 11));
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {},
-            new String [] {"ID", "Producto", "Descripción", "Stock", "Precio", "Proveedor"}
+            new String [] {"ID", "Producto", "Stock", "Precio", "Proveedor"}
         ) {
-            boolean[] canEdit = new boolean [] {false, false, false, false, false, false};
+            boolean[] canEdit = new boolean [] {false, false, false, false, false};
             public boolean isCellEditable(int rowIndex, int columnIndex) {return canEdit [columnIndex];}
         });
         jTable1.getTableHeader().setReorderingAllowed(false);

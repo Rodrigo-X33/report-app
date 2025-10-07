@@ -13,15 +13,14 @@ public class DAOInventoryProductsImpl extends Database implements DAOInventoryPr
     public void registrar(InventoryProducts product) throws Exception {
         try {
             this.Conectar();
-            PreparedStatement st = this.conexion.prepareStatement("INSERT INTO inventory_products(product_name, description, stock, price, supplier_id) VALUES(?,?,?,?,?)");
+            PreparedStatement st = this.conexion.prepareStatement("INSERT INTO inventory_products(product_name, stock, price, supplier_id) VALUES(?,?,?,?)");
             st.setString(1, product.getProductName());
-            st.setString(2, product.getDescription());
-            st.setInt(3, product.getStock());
-            st.setDouble(4, product.getPrice());
+            st.setInt(2, product.getStock());
+            st.setDouble(3, product.getPrice());
             if (product.getSupplierId() != null) {
-                st.setInt(5, product.getSupplierId());
+                st.setInt(4, product.getSupplierId());
             } else {
-                st.setNull(5, java.sql.Types.INTEGER);
+                st.setNull(4, java.sql.Types.INTEGER);
             }
             st.executeUpdate();
             st.close();
@@ -34,17 +33,16 @@ public class DAOInventoryProductsImpl extends Database implements DAOInventoryPr
     public void modificar(InventoryProducts product) throws Exception {
         try {
             this.Conectar();
-            PreparedStatement st = this.conexion.prepareStatement("UPDATE inventory_products SET product_name=?, description=?, stock=?, price=?, supplier_id=? WHERE id=?");
+            PreparedStatement st = this.conexion.prepareStatement("UPDATE inventory_products SET product_name=?, stock=?, price=?, supplier_id=? WHERE id=?");
             st.setString(1, product.getProductName());
-            st.setString(2, product.getDescription());
-            st.setInt(3, product.getStock());
-            st.setDouble(4, product.getPrice());
+            st.setInt(2, product.getStock());
+            st.setDouble(3, product.getPrice());
             if (product.getSupplierId() != null) {
-                st.setInt(5, product.getSupplierId());
+                st.setInt(4, product.getSupplierId());
             } else {
-                st.setNull(5, java.sql.Types.INTEGER);
+                st.setNull(4, java.sql.Types.INTEGER);
             }
-            st.setInt(6, product.getId());
+            st.setInt(5, product.getId());
             st.executeUpdate();
             st.close();
         } finally {
@@ -80,7 +78,6 @@ public class DAOInventoryProductsImpl extends Database implements DAOInventoryPr
                 InventoryProducts p = new InventoryProducts();
                 p.setId(rs.getInt("id"));
                 p.setProductName(rs.getString("product_name"));
-                p.setDescription(rs.getString("description"));
                 p.setStock(rs.getInt("stock"));
                 p.setPrice(rs.getDouble("price"));
                 int sid = rs.getInt("supplier_id");
@@ -107,7 +104,6 @@ public class DAOInventoryProductsImpl extends Database implements DAOInventoryPr
                 p = new InventoryProducts();
                 p.setId(rs.getInt("id"));
                 p.setProductName(rs.getString("product_name"));
-                p.setDescription(rs.getString("description"));
                 p.setStock(rs.getInt("stock"));
                 p.setPrice(rs.getDouble("price"));
                 int sid = rs.getInt("supplier_id");

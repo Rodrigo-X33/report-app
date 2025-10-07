@@ -5,7 +5,7 @@ import com.mycompany.interfaces.DAOInventoryProducts;
 import java.awt.Color;
 import javax.swing.table.DefaultTableModel;
 
-import com.mycompany.utils.IconLoader;
+// IconLoader removed to match Users view (buttons without icons)
 
 public class InventoryList extends javax.swing.JPanel {
     private javax.swing.JButton addButton;
@@ -21,10 +21,6 @@ public class InventoryList extends javax.swing.JPanel {
     title.putClientProperty("FlatLaf.styleClass", "h1");
     title.setForeground(Color.black);
     searchField.putClientProperty("JTextField.placeholderText", "Buscar producto...");
-    searchButton.setIcon(IconLoader.loadIcon("book-open-page-variant.png", 20));
-    addButton.setIcon(IconLoader.loadIcon("calendar-plus.png", 20));
-    editButton.setIcon(IconLoader.loadIcon("calendar-multiple-check.png", 20));
-    deleteButton.setIcon(IconLoader.loadIcon("calendar-multiple-check.png", 20));
     }
     private void LoadInventory() {
         try {
@@ -54,24 +50,44 @@ public class InventoryList extends javax.swing.JPanel {
         searchButton.setText("Buscar");
         searchButton.setBorderPainted(false);
         searchButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        searchButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                searchButtonActionPerformed(evt);
+            }
+        });
         addButton.setBackground(new java.awt.Color(18, 90, 173));
         addButton.setFont(new java.awt.Font("Segoe UI", 0, 18));
         addButton.setForeground(new java.awt.Color(255, 255, 255));
         addButton.setText("Agregar");
         addButton.setBorderPainted(false);
         addButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        addButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                addButtonActionPerformed(evt);
+            }
+        });
         editButton.setBackground(new java.awt.Color(18, 90, 173));
         editButton.setFont(new java.awt.Font("Segoe UI", 0, 18));
         editButton.setForeground(new java.awt.Color(255, 255, 255));
         editButton.setText("Editar");
         editButton.setBorderPainted(false);
         editButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        editButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                editButtonActionPerformed(evt);
+            }
+        });
         deleteButton.setBackground(new java.awt.Color(18, 90, 173));
         deleteButton.setFont(new java.awt.Font("Segoe UI", 0, 18));
         deleteButton.setForeground(new java.awt.Color(255, 255, 255));
         deleteButton.setText("Eliminar");
         deleteButton.setBorderPainted(false);
         deleteButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        deleteButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                deleteButtonActionPerformed(evt);
+            }
+        });
         jTable1.setFont(new java.awt.Font("Segoe UI", 0, 11));
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {},
@@ -82,6 +98,11 @@ public class InventoryList extends javax.swing.JPanel {
         });
         jTable1.getTableHeader().setReorderingAllowed(false);
         jScrollPane1.setViewportView(jTable1);
+        jTable1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                jTable1MousePressed(evt);
+            }
+        });
         javax.swing.GroupLayout bgLayout = new javax.swing.GroupLayout(bg);
         bg.setLayout(bgLayout);
         bgLayout.setHorizontalGroup(
@@ -90,17 +111,18 @@ public class InventoryList extends javax.swing.JPanel {
                 .addContainerGap()
                 .addGroup(bgLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(title, javax.swing.GroupLayout.DEFAULT_SIZE, 700, Short.MAX_VALUE)
-                    .addGroup(bgLayout.createSequentialGroup()
+                    .addComponent(jScrollPane1)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, bgLayout.createSequentialGroup()
                         .addComponent(searchField)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(searchButton)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(searchButton))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, bgLayout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(addButton)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(editButton)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(deleteButton))
-                    .addComponent(jScrollPane1))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(deleteButton)))
                 .addContainerGap())
         );
         bgLayout.setVerticalGroup(
@@ -111,12 +133,14 @@ public class InventoryList extends javax.swing.JPanel {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(bgLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(searchField, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(searchButton, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(addButton, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(editButton, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(deleteButton, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(searchButton, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 278, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 238, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(bgLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(deleteButton)
+                    .addComponent(editButton)
+                    .addComponent(addButton))
                 .addContainerGap())
         );
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
@@ -129,6 +153,49 @@ public class InventoryList extends javax.swing.JPanel {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(bg, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
+    }
+    private void jTable1MousePressed(java.awt.event.MouseEvent evt) {
+
+    }
+
+    private void addButtonActionPerformed(java.awt.event.ActionEvent evt) {
+        // Implement opening of add-panel if available
+    }
+
+    private void deleteButtonActionPerformed(java.awt.event.ActionEvent evt) {
+        try {
+            DAOInventoryProducts dao = new DAOInventoryProductsImpl();
+            DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+            if (jTable1.getSelectedRows().length < 1) {
+                javax.swing.JOptionPane.showMessageDialog(this, "Debes seleccionar uno o más productos a eliminar.\n", "AVISO", javax.swing.JOptionPane.ERROR_MESSAGE);
+            } else {
+                for (int i : jTable1.getSelectedRows()) {
+                    try {
+                        dao.eliminar((int) jTable1.getValueAt(i, 0));
+                        model.removeRow(i);
+                    } catch (Exception e) {
+                        System.out.println(e.getMessage());
+                    }
+                }
+            }
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
+    private void editButtonActionPerformed(java.awt.event.ActionEvent evt) {
+        // Implement edit behavior if UpInventory panel exists
+    }
+
+    private void searchButtonActionPerformed(java.awt.event.ActionEvent evt) {
+        try {
+            DAOInventoryProducts dao = new DAOInventoryProductsImpl();
+            DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+            model.setRowCount(0);
+            dao.listar(searchField.getText()).forEach((p) -> model.addRow(new Object[]{p.getId(), p.getProductName(), p.getStock(), p.getPrice(), p.getSupplierId()}));
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
     }
     private javax.swing.JPanel bg;
     private javax.swing.JScrollPane jScrollPane1;

@@ -5,7 +5,7 @@ import com.mycompany.interfaces.DAOInvoices;
 import java.awt.Color;
 import javax.swing.table.DefaultTableModel;
 
-import com.mycompany.utils.IconLoader;
+// IconLoader removed to match Users view (buttons without icons)
 
 public class InvoicesList extends javax.swing.JPanel {
     private javax.swing.JButton addButton;
@@ -21,16 +21,16 @@ public class InvoicesList extends javax.swing.JPanel {
     title.putClientProperty("FlatLaf.styleClass", "h1");
     title.setForeground(Color.black);
     searchField.putClientProperty("JTextField.placeholderText", "Buscar por número de factura...");
-    searchButton.setIcon(IconLoader.loadIcon("file-chart.png", 20));
-    addButton.setIcon(IconLoader.loadIcon("calendar-plus.png", 20));
-    editButton.setIcon(IconLoader.loadIcon("calendar-multiple-check.png", 20));
-    deleteButton.setIcon(IconLoader.loadIcon("calendar-multiple-check.png", 20));
     }
     private void LoadInvoices() {
         try {
             DAOInvoices dao = new DAOInvoicesImpl();
             DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
-            dao.listar().forEach((i) -> model.addRow(new Object[]{i.getId(), i.getInvoiceNumber(), i.getCustomerId(), i.getDate(), i.getTotal()}));
+            model.setRowCount(0);
+            String q = searchField.getText();
+            dao.listar().stream()
+                .filter(i -> q == null || q.isEmpty() || String.valueOf(i.getInvoiceNumber()).contains(q))
+                .forEach((i) -> model.addRow(new Object[]{i.getId(), i.getInvoiceNumber(), i.getCustomerId(), i.getDate(), i.getTotal()}));
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
@@ -47,31 +47,31 @@ public class InvoicesList extends javax.swing.JPanel {
         jTable1 = new javax.swing.JTable();
         setBackground(new java.awt.Color(255, 255, 255));
         bg.setBackground(new java.awt.Color(255, 255, 255));
-        title.setText("Facturación");
-        searchButton.setBackground(new java.awt.Color(18, 90, 173));
-        searchButton.setFont(new java.awt.Font("Segoe UI", 1, 18));
-        searchButton.setForeground(new java.awt.Color(255, 255, 255));
-        searchButton.setText("Buscar");
-        searchButton.setBorderPainted(false);
-        searchButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        addButton.setBackground(new java.awt.Color(18, 90, 173));
-        addButton.setFont(new java.awt.Font("Segoe UI", 0, 18));
-        addButton.setForeground(new java.awt.Color(255, 255, 255));
-        addButton.setText("Agregar");
-        addButton.setBorderPainted(false);
-        addButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        editButton.setBackground(new java.awt.Color(18, 90, 173));
-        editButton.setFont(new java.awt.Font("Segoe UI", 0, 18));
-        editButton.setForeground(new java.awt.Color(255, 255, 255));
-        editButton.setText("Editar");
-        editButton.setBorderPainted(false);
-        editButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        deleteButton.setBackground(new java.awt.Color(18, 90, 173));
-        deleteButton.setFont(new java.awt.Font("Segoe UI", 0, 18));
-        deleteButton.setForeground(new java.awt.Color(255, 255, 255));
-        deleteButton.setText("Eliminar");
-        deleteButton.setBorderPainted(false);
-        deleteButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+    title.setText("Facturación");
+    searchButton.setBackground(new java.awt.Color(18, 90, 173));
+    searchButton.setFont(new java.awt.Font("Segoe UI", 1, 18));
+    searchButton.setForeground(new java.awt.Color(255, 255, 255));
+    searchButton.setText("Buscar");
+    searchButton.setBorderPainted(false);
+    searchButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+    addButton.setBackground(new java.awt.Color(18, 90, 173));
+    addButton.setFont(new java.awt.Font("Segoe UI", 0, 18));
+    addButton.setForeground(new java.awt.Color(255, 255, 255));
+    addButton.setText("Agregar");
+    addButton.setBorderPainted(false);
+    addButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+    editButton.setBackground(new java.awt.Color(18, 90, 173));
+    editButton.setFont(new java.awt.Font("Segoe UI", 0, 18));
+    editButton.setForeground(new java.awt.Color(255, 255, 255));
+    editButton.setText("Editar");
+    editButton.setBorderPainted(false);
+    editButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+    deleteButton.setBackground(new java.awt.Color(18, 90, 173));
+    deleteButton.setFont(new java.awt.Font("Segoe UI", 0, 18));
+    deleteButton.setForeground(new java.awt.Color(255, 255, 255));
+    deleteButton.setText("Eliminar");
+    deleteButton.setBorderPainted(false);
+    deleteButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jTable1.setFont(new java.awt.Font("Segoe UI", 0, 11));
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {},
@@ -82,6 +82,28 @@ public class InvoicesList extends javax.swing.JPanel {
         });
         jTable1.getTableHeader().setReorderingAllowed(false);
         jScrollPane1.setViewportView(jTable1);
+        // actions
+        searchButton.addActionListener((evt) -> LoadInvoices());
+        searchField.addActionListener((evt) -> LoadInvoices());
+        addButton.addActionListener((evt) -> {
+            // TODO: open add invoice form
+        });
+        editButton.addActionListener((evt) -> {
+            // TODO: open edit invoice form with selected id
+        });
+        deleteButton.addActionListener((evt) -> {
+            try {
+                int row = jTable1.getSelectedRow();
+                if (row >= 0) {
+                    int id = (int) jTable1.getValueAt(row, 0);
+                    DAOInvoices dao = new DAOInvoicesImpl();
+                    dao.eliminar(id);
+                    LoadInvoices();
+                }
+            } catch (Exception e) {
+                System.out.println(e.getMessage());
+            }
+        });
         javax.swing.GroupLayout bgLayout = new javax.swing.GroupLayout(bg);
         bg.setLayout(bgLayout);
         bgLayout.setHorizontalGroup(
@@ -89,18 +111,24 @@ public class InvoicesList extends javax.swing.JPanel {
             .addGroup(bgLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(bgLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(title, javax.swing.GroupLayout.DEFAULT_SIZE, 700, Short.MAX_VALUE)
                     .addGroup(bgLayout.createSequentialGroup()
-                        .addComponent(searchField)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(searchButton)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(title, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGap(699, 699, 699))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, bgLayout.createSequentialGroup()
+                        .addGroup(bgLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(bgLayout.createSequentialGroup()
+                                .addComponent(searchField)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(searchButton)))
+                        .addGap(50, 50, 50))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, bgLayout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(addButton)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(editButton)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(deleteButton))
-                    .addComponent(jScrollPane1))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(deleteButton)))
                 .addContainerGap())
         );
         bgLayout.setVerticalGroup(
@@ -111,12 +139,14 @@ public class InvoicesList extends javax.swing.JPanel {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(bgLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(searchField, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(searchButton, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(addButton, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(editButton, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(deleteButton, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(searchButton, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 278, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 272, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(bgLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(deleteButton)
+                    .addComponent(editButton)
+                    .addComponent(addButton))
                 .addContainerGap())
         );
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);

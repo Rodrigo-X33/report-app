@@ -30,12 +30,11 @@ public class InvoicesList extends javax.swing.JPanel {
         try {
             DAOInvoices dao = new DAOInvoicesImpl();
             DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
-            dao.listar().forEach((i) -> model.addRow(new Object[]{i.getId(), i.getInvoiceNumber(), i.getCustomerId(), i.getDate(), i.getTotal(), i.getStatus(), i.getNotes()}));
+            dao.listar().forEach((i) -> model.addRow(new Object[]{i.getId(), i.getInvoiceNumber(), i.getCustomerId(), i.getDate(), i.getTotal()}));
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
     }
-    @SuppressWarnings("unchecked")
     private void initComponents() {
         bg = new javax.swing.JPanel();
         title = new javax.swing.JLabel();
@@ -76,9 +75,9 @@ public class InvoicesList extends javax.swing.JPanel {
         jTable1.setFont(new java.awt.Font("Segoe UI", 0, 11));
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {},
-            new String [] {"ID", "Número", "Cliente", "Fecha", "Total", "Estado", "Notas"}
+            new String [] {"ID", "Número", "Cliente", "Fecha", "Total"}
         ) {
-            boolean[] canEdit = new boolean [] {false, false, false, false, false, false, false};
+            boolean[] canEdit = new boolean [] {false, false, false, false, false};
             public boolean isCellEditable(int rowIndex, int columnIndex) {return canEdit [columnIndex];}
         });
         jTable1.getTableHeader().setReorderingAllowed(false);

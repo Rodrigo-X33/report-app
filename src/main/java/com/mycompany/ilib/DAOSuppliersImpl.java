@@ -3,8 +3,7 @@ package com.mycompany.ilib;
 import com.mycompany.db.Database;
 import com.mycompany.interfaces.DAOSuppliers;
 import com.mycompany.models.Suppliers;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
+// imports PreparedStatement/ResultSet are used via fully-qualified names in try-with-resources
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,12 +12,12 @@ public class DAOSuppliersImpl extends Database implements DAOSuppliers {
     public void registrar(Suppliers supplier) throws Exception {
         try {
             this.Conectar();
-            PreparedStatement st = this.conexion.prepareStatement("INSERT INTO suppliers(name, email, phone) VALUES(?,?,?)");
-            st.setString(1, supplier.getName());
-            st.setString(2, supplier.getEmail());
-            st.setString(3, supplier.getPhone());
-            st.executeUpdate();
-            st.close();
+            try (java.sql.PreparedStatement st = this.conexion.prepareStatement("INSERT INTO suppliers(name, email, phone) VALUES(?,?,?)")) {
+                st.setString(1, supplier.getName());
+                st.setString(2, supplier.getEmail());
+                st.setString(3, supplier.getPhone());
+                st.executeUpdate();
+            }
         } finally {
             this.Cerrar();
         }
@@ -28,13 +27,13 @@ public class DAOSuppliersImpl extends Database implements DAOSuppliers {
     public void modificar(Suppliers supplier) throws Exception {
         try {
             this.Conectar();
-            PreparedStatement st = this.conexion.prepareStatement("UPDATE suppliers SET name=?, email=?, phone=? WHERE id=?");
-            st.setString(1, supplier.getName());
-            st.setString(2, supplier.getEmail());
-            st.setString(3, supplier.getPhone());
-            st.setInt(4, supplier.getId());
-            st.executeUpdate();
-            st.close();
+            try (java.sql.PreparedStatement st = this.conexion.prepareStatement("UPDATE suppliers SET name=?, email=?, phone=? WHERE id=?")) {
+                st.setString(1, supplier.getName());
+                st.setString(2, supplier.getEmail());
+                st.setString(3, supplier.getPhone());
+                st.setInt(4, supplier.getId());
+                st.executeUpdate();
+            }
         } finally {
             this.Cerrar();
         }
@@ -44,10 +43,10 @@ public class DAOSuppliersImpl extends Database implements DAOSuppliers {
     public void eliminar(int supplierId) throws Exception {
         try {
             this.Conectar();
-            PreparedStatement st = this.conexion.prepareStatement("DELETE FROM suppliers WHERE id=?");
-            st.setInt(1, supplierId);
-            st.executeUpdate();
-            st.close();
+            try (java.sql.PreparedStatement st = this.conexion.prepareStatement("DELETE FROM suppliers WHERE id=?")) {
+                st.setInt(1, supplierId);
+                st.executeUpdate();
+            }
         } finally {
             this.Cerrar();
         }
@@ -59,21 +58,21 @@ public class DAOSuppliersImpl extends Database implements DAOSuppliers {
         try {
             this.Conectar();
             String query = name == null || name.isEmpty() ? "SELECT * FROM suppliers" : "SELECT * FROM suppliers WHERE name ILIKE ?";
-            PreparedStatement st = this.conexion.prepareStatement(query);
-            if (name != null && !name.isEmpty()) {
-                st.setString(1, "%" + name + "%");
+            try (java.sql.PreparedStatement st = this.conexion.prepareStatement(query)) {
+                if (name != null && !name.isEmpty()) {
+                    st.setString(1, "%" + name + "%");
+                }
+                try (java.sql.ResultSet rs = st.executeQuery()) {
+                    while (rs.next()) {
+                        Suppliers s = new Suppliers();
+                        s.setId(rs.getInt("id"));
+                        s.setName(rs.getString("name"));
+                        s.setEmail(rs.getString("email"));
+                        s.setPhone(rs.getString("phone"));
+                        lista.add(s);
+                    }
+                }
             }
-            ResultSet rs = st.executeQuery();
-            while (rs.next()) {
-                Suppliers s = new Suppliers();
-                s.setId(rs.getInt("id"));
-                s.setName(rs.getString("name"));
-                s.setEmail(rs.getString("email"));
-                s.setPhone(rs.getString("phone"));
-                lista.add(s);
-            }
-            rs.close();
-            st.close();
         } finally {
             this.Cerrar();
         }
@@ -85,18 +84,18 @@ public class DAOSuppliersImpl extends Database implements DAOSuppliers {
         Suppliers s = null;
         try {
             this.Conectar();
-            PreparedStatement st = this.conexion.prepareStatement("SELECT * FROM suppliers WHERE id=?");
-            st.setInt(1, supplierId);
-            ResultSet rs = st.executeQuery();
-            if (rs.next()) {
-                s = new Suppliers();
-                s.setId(rs.getInt("id"));
-                s.setName(rs.getString("name"));
-                s.setEmail(rs.getString("email"));
-                s.setPhone(rs.getString("phone"));
+            try (java.sql.PreparedStatement st = this.conexion.prepareStatement("SELECT * FROM suppliers WHERE id=?")) {
+                st.setInt(1, supplierId);
+                try (java.sql.ResultSet rs = st.executeQuery()) {
+                    if (rs.next()) {
+                        s = new Suppliers();
+                        s.setId(rs.getInt("id"));
+                        s.setName(rs.getString("name"));
+                        s.setEmail(rs.getString("email"));
+                        s.setPhone(rs.getString("phone"));
+                    }
+                }
             }
-            rs.close();
-            st.close();
         } finally {
             this.Cerrar();
         }

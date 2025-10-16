@@ -5,19 +5,17 @@
  */
 package com.mycompany.ilib;
 
-import com.formdev.flatlaf.FlatLightLaf;
 import com.formdev.flatlaf.intellijthemes.materialthemeuilite.FlatMaterialLighterIJTheme;
 import com.mycompany.views.*;
+import com.mycompany.views.Inventario;
+import com.mycompany.views.Clientes;
+import com.mycompany.views.SuppliersList;
 import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.Insets;
-import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Locale;
 import javax.swing.JPanel;
-import javax.swing.UIManager;
-import org.netbeans.lib.awtextra.AbsoluteConstraints;
 
 /**
  *
@@ -46,7 +44,7 @@ public class Dashboard extends javax.swing.JFrame {
     
     private void SetDate() {
         LocalDate now = LocalDate.now();
-        Locale spanishLocale = new Locale("es", "ES");
+        Locale spanishLocale = Locale.forLanguageTag("es-ES");
         dateText.setText(now.format(DateTimeFormatter.ofPattern("'Hoy es' EEEE dd 'de' MMMM 'de' yyyy", spanishLocale)));
     }
     
@@ -64,7 +62,6 @@ public class Dashboard extends javax.swing.JFrame {
         content.repaint();
     }
 
-    @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
@@ -164,11 +161,12 @@ public class Dashboard extends javax.swing.JFrame {
             }
         });
 
-        btn_books.setBackground(new java.awt.Color(21, 101, 192));
-        btn_books.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        btn_books.setForeground(new java.awt.Color(255, 255, 255));
-        btn_books.setIcon(new javax.swing.ImageIcon(getClass().getResource("/book-open-page-variant.png"))); // NOI18N
-        btn_books.setText("Libros");
+    btn_books.setBackground(new java.awt.Color(21, 101, 192));
+    btn_books.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+    btn_books.setForeground(new java.awt.Color(255, 255, 255));
+    // Ahora este botón mostrará la lista de Facturas (tabla)
+    btn_books.setIcon(new javax.swing.ImageIcon(getClass().getResource("/file-chart.png"))); // NOI18N
+    btn_books.setText("Facturas");
         btn_books.setBorder(javax.swing.BorderFactory.createMatteBorder(1, 13, 1, 1, new java.awt.Color(0, 0, 0)));
         btn_books.setBorderPainted(false);
         btn_books.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
@@ -184,8 +182,67 @@ public class Dashboard extends javax.swing.JFrame {
         btn_reports.setBackground(new java.awt.Color(21, 101, 192));
         btn_reports.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         btn_reports.setForeground(new java.awt.Color(255, 255, 255));
+        // Este botón ahora sirve para crear facturas (antes llamado Facturas)
+        // Uso un icono existente para evitar recursos faltantes
         btn_reports.setIcon(new javax.swing.ImageIcon(getClass().getResource("/file-chart.png"))); // NOI18N
-        btn_reports.setText("Facturas");
+        btn_reports.setText("Crear facturas");
+
+        // Nuevo botón: Inventario (Existencias)
+        btn_inventory = new javax.swing.JButton();
+        btn_inventory.setBackground(new java.awt.Color(21, 101, 192));
+        btn_inventory.setFont(new java.awt.Font("Segoe UI", 1, 14));
+        btn_inventory.setForeground(new java.awt.Color(255, 255, 255));
+    btn_inventory.setIcon(new javax.swing.ImageIcon(getClass().getResource("/book-open-page-variant.png")));
+    btn_inventory.setText("Existencias");
+        btn_inventory.setBorder(javax.swing.BorderFactory.createMatteBorder(1, 13, 1, 1, new java.awt.Color(0, 0, 0)));
+        btn_inventory.setBorderPainted(false);
+        btn_inventory.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        btn_inventory.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        btn_inventory.setIconTextGap(13);
+        btn_inventory.setInheritsPopupMenu(true);
+        btn_inventory.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ShowJPanel(new Inventario());
+            }
+        });
+
+        // Nuevo botón: Clientes
+        btn_clients = new javax.swing.JButton();
+        btn_clients.setBackground(new java.awt.Color(21, 101, 192));
+        btn_clients.setFont(new java.awt.Font("Segoe UI", 1, 14));
+        btn_clients.setForeground(new java.awt.Color(255, 255, 255));
+    btn_clients.setIcon(new javax.swing.ImageIcon(getClass().getResource("/account-multiple.png")));
+    btn_clients.setText("Clientes");
+        btn_clients.setBorder(javax.swing.BorderFactory.createMatteBorder(1, 13, 1, 1, new java.awt.Color(0, 0, 0)));
+        btn_clients.setBorderPainted(false);
+        btn_clients.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        btn_clients.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        btn_clients.setIconTextGap(13);
+        btn_clients.setInheritsPopupMenu(true);
+        btn_clients.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ShowJPanel(new Clientes());
+            }
+        });
+
+        // Nuevo botón: Proveedores
+        btn_suppliers = new javax.swing.JButton();
+        btn_suppliers.setBackground(new java.awt.Color(21, 101, 192));
+        btn_suppliers.setFont(new java.awt.Font("Segoe UI", 1, 14));
+        btn_suppliers.setForeground(new java.awt.Color(255, 255, 255));
+    btn_suppliers.setIcon(new javax.swing.ImageIcon(getClass().getResource("/account-multiple.png")));
+    btn_suppliers.setText("Proveedores");
+        btn_suppliers.setBorder(javax.swing.BorderFactory.createMatteBorder(1, 13, 1, 1, new java.awt.Color(0, 0, 0)));
+        btn_suppliers.setBorderPainted(false);
+        btn_suppliers.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        btn_suppliers.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        btn_suppliers.setIconTextGap(13);
+        btn_suppliers.setInheritsPopupMenu(true);
+        btn_suppliers.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ShowJPanel(new SuppliersList());
+            }
+        });
         btn_reports.setBorder(javax.swing.BorderFactory.createMatteBorder(1, 13, 1, 1, new java.awt.Color(0, 0, 0)));
         btn_reports.setBorderPainted(false);
         btn_reports.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
@@ -208,12 +265,15 @@ public class Dashboard extends javax.swing.JFrame {
             .addGroup(menuLayout.createSequentialGroup()
                 .addGap(40, 40, 40)
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE))
-            .addComponent(btn_lends, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(btn_users, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(btn_prin, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(btn_lends, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(btn_returns, javax.swing.GroupLayout.DEFAULT_SIZE, 270, Short.MAX_VALUE)
+            .addComponent(btn_users, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(btn_books, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(btn_reports, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(btn_inventory, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(btn_clients, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(btn_suppliers, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         menuLayout.setVerticalGroup(
             menuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -239,9 +299,18 @@ public class Dashboard extends javax.swing.JFrame {
                         .addComponent(btn_books, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(menuLayout.createSequentialGroup()
                         .addGap(250, 250, 250)
-                        .addComponent(btn_reports, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addComponent(btn_reports, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(menuLayout.createSequentialGroup()
+                        .addGap(300, 300, 300)
+                        .addComponent(btn_inventory, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(menuLayout.createSequentialGroup()
+                        .addGap(350, 350, 350)
+                        .addComponent(btn_clients, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(menuLayout.createSequentialGroup()
+                        .addGap(400, 400, 400)
+                        .addComponent(btn_suppliers, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
-
         header.setBackground(new java.awt.Color(25, 118, 210));
         header.setPreferredSize(new java.awt.Dimension(744, 150));
 
@@ -324,12 +393,31 @@ public class Dashboard extends javax.swing.JFrame {
     }//GEN-LAST:event_btn_usersActionPerformed
 
     private void btn_reportsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_reportsActionPerformed
+        // "Crear facturas" — abre el formulario/flujo para crear facturas
         ShowJPanel(new Facturas());
     }//GEN-LAST:event_btn_reportsActionPerformed
 
     private void btn_booksActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_booksActionPerformed
+        // "Facturas" — muestra la tabla/listado de facturas
         ShowJPanel(new FacturasTable());
     }//GEN-LAST:event_btn_booksActionPerformed
+
+    // Nuevo: acceso directo a Inventario
+    // Reuso btn_lends/otros no conveniente; añadir enlace en btn_lends no solicitado.
+    // Añadimos un handler público para abrir Inventario desde código si se desea.
+    public void openInventario() {
+        ShowJPanel(new Inventario());
+    }
+
+    // Nuevo: acceso directo a Clientes
+    public void openClientes() {
+        ShowJPanel(new Clientes());
+    }
+
+    // Nuevo: acceso directo a Proveedores
+    public void openSuppliers() {
+        ShowJPanel(new SuppliersList());
+    }
 
     /**
      * @param args the command line arguments
@@ -350,6 +438,9 @@ public class Dashboard extends javax.swing.JFrame {
     private javax.swing.JLabel appName;
     private javax.swing.JPanel background;
     private javax.swing.JButton btn_books;
+    private javax.swing.JButton btn_inventory;
+    private javax.swing.JButton btn_clients;
+    private javax.swing.JButton btn_suppliers;
     private javax.swing.JButton btn_lends;
     private javax.swing.JButton btn_prin;
     private javax.swing.JButton btn_reports;

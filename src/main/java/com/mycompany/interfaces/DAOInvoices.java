@@ -4,7 +4,7 @@ import com.mycompany.models.Invoices;
 import java.util.List;
 
 public interface DAOInvoices {
-    void registrar(Invoices invoice) throws Exception;
+    int registrar(Invoices invoice) throws Exception; // retorna el ID generado
     void modificar(Invoices invoice) throws Exception;
     void eliminar(int invoiceId) throws Exception;
     List<Invoices> listar() throws Exception;

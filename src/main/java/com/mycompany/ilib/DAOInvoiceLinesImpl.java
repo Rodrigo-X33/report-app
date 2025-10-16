@@ -106,4 +106,23 @@ public class DAOInvoiceLinesImpl extends Database implements DAOInvoiceLines {
         }
         return l;
     }
+
+
+public void registrarLinea(int invoiceId, int productId, int cantidad, double precio, double subtotal) throws Exception {
+    this.Conectar();
+    try (java.sql.PreparedStatement st = this.conexion.prepareStatement(
+            "INSERT INTO invoice_lines(invoice_id, product_id, quantity, unit_price, subtotal) VALUES(?,?,?,?,?)")) {
+        st.setInt(1, invoiceId);
+        st.setInt(2, productId);
+        st.setInt(3, cantidad);
+        st.setDouble(4, precio);
+        st.setDouble(5, subtotal);
+        st.executeUpdate();
+    } finally {
+        this.Cerrar();
+    }
+}
+
+
+
 }

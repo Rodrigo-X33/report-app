@@ -8,27 +8,36 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class DAOInvoicesImpl extends Database implements DAOInvoices {
+
     @Override
-    public void registrar(Invoices invoice) throws Exception {
-        try {
-            this.Conectar();
-            try (java.sql.PreparedStatement st = this.conexion.prepareStatement("INSERT INTO invoices(invoice_number, customer_id, date, total) VALUES(?,?,?,?)")) {
-                st.setString(1, invoice.getInvoiceNumber());
-                st.setInt(2, invoice.getCustomerId());
-                st.setDate(3, invoice.getDate());
-                st.setDouble(4, invoice.getTotal());
-                st.executeUpdate();
+    public int registrar(Invoices invoice) throws Exception {
+        int generatedId = -1;
+        this.Conectar();
+        try (java.sql.PreparedStatement st = this.conexion.prepareStatement(
+                "INSERT INTO invoices(invoice_number, customer_id, date, total) VALUES(?,?,?,?) RETURNING id")) {
+            st.setString(1, invoice.getInvoiceNumber());
+            st.setInt(2, invoice.getCustomerId());
+            st.setDate(3, invoice.getDate());
+            st.setDouble(4, invoice.getTotal());
+
+            try (java.sql.ResultSet rs = st.executeQuery()) {
+                if (rs.next()) {
+                    generatedId = rs.getInt(1);
+                    invoice.setId(generatedId);
+                }
             }
         } finally {
             this.Cerrar();
         }
+        return generatedId;
     }
 
     @Override
     public void modificar(Invoices invoice) throws Exception {
         try {
             this.Conectar();
-            try (java.sql.PreparedStatement st = this.conexion.prepareStatement("UPDATE invoices SET invoice_number=?, customer_id=?, date=?, total=? WHERE id=?")) {
+            try (java.sql.PreparedStatement st = this.conexion.prepareStatement(
+                    "UPDATE invoices SET invoice_number=?, customer_id=?, date=?, total=? WHERE id=?")) {
                 st.setString(1, invoice.getInvoiceNumber());
                 st.setInt(2, invoice.getCustomerId());
                 st.setDate(3, invoice.getDate());
@@ -103,4 +112,19 @@ public class DAOInvoicesImpl extends Database implements DAOInvoices {
         }
         return i;
     }
+
+    public int getLastInvoiceId() throws Exception {
+        int lastId = -1;
+        this.Conectar();
+        try (java.sql.PreparedStatement st = this.conexion.prepareStatement("SELECT MAX(id) AS last_id FROM invoices");
+                java.sql.ResultSet rs = st.executeQuery()) {
+            if (rs.next()) {
+                lastId = rs.getInt("last_id");
+            }
+        } finally {
+            this.Cerrar();
+        }
+        return lastId;
+    }
+
 }

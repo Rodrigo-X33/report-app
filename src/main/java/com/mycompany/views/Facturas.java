@@ -230,6 +230,24 @@ public class Facturas extends javax.swing.JPanel {
                 double subtotal = Double.parseDouble(modeloTabla.getValueAt(i, 3).toString());
 
                 daoLineas.registrarLinea(invoiceId, productId, cantidad, precio, subtotal);
+
+                                // Actualizar stock del producto en inventario
+                                try {
+                                        com.mycompany.ilib.DAOInventoryProductsImpl daoProd = new com.mycompany.ilib.DAOInventoryProductsImpl();
+                                        com.mycompany.models.InventoryProducts prod = daoProd.getProductById(productId);
+                                        if (prod != null) {
+                                                int newStock = prod.getStock() - cantidad;
+                                                if (newStock < 0) newStock = 0; // evitar stock negativo
+                                                prod.setStock(newStock);
+                                                daoProd.modificar(prod);
+                                        } else {
+                                                System.err.println("Producto id=" + productId + " no encontrado al actualizar stock.");
+                                        }
+                                } catch (Exception ex) {
+                                        // No abortamos el guardado de la factura por fallos al actualizar stock,
+                                        // pero reportamos en consola para depuración.
+                                        System.err.println("Error al actualizar stock para producto " + productId + ": " + ex.getMessage());
+                                }
             }
             JOptionPane.showMessageDialog(this, "Factura guardada correctamente");
             modeloTabla.setRowCount(0);

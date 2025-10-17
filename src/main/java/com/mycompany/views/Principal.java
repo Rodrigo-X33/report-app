@@ -75,7 +75,7 @@ public class Principal extends javax.swing.JPanel {
         bg.setBackground(new java.awt.Color(255, 255, 255));
 
         image.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        image.setIcon(new javax.swing.ImageIcon(getClass().getResource("/candado.png"))); // NOI18N
+        image.setIcon(new javax.swing.ImageIcon(getClass().getResource("/home-outline.png"))); // NOI18N
         image.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         image.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         image.setMaximumSize(new java.awt.Dimension(50, 30));

@@ -110,56 +110,8 @@ public class Dashboard extends javax.swing.JFrame {
             }
         });
 
-        btn_lends.setBackground(new java.awt.Color(21, 101, 192));
-        btn_lends.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        btn_lends.setForeground(new java.awt.Color(255, 255, 255));
-        btn_lends.setIcon(new javax.swing.ImageIcon(getClass().getResource("/calendar-plus.png"))); // NOI18N
-        btn_lends.setText("Préstamos");
-        btn_lends.setBorder(javax.swing.BorderFactory.createMatteBorder(1, 13, 1, 1, new java.awt.Color(0, 0, 0)));
-        btn_lends.setBorderPainted(false);
-        btn_lends.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        btn_lends.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        btn_lends.setIconTextGap(13);
-        btn_lends.setInheritsPopupMenu(true);
-        btn_lends.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn_lendsActionPerformed(evt);
-            }
-        });
 
-        btn_returns.setBackground(new java.awt.Color(21, 101, 192));
-        btn_returns.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        btn_returns.setForeground(new java.awt.Color(255, 255, 255));
-        btn_returns.setIcon(new javax.swing.ImageIcon(getClass().getResource("/calendar-multiple-check.png"))); // NOI18N
-        btn_returns.setText("Devoluciones");
-        btn_returns.setBorder(javax.swing.BorderFactory.createMatteBorder(1, 13, 1, 1, new java.awt.Color(0, 0, 0)));
-        btn_returns.setBorderPainted(false);
-        btn_returns.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        btn_returns.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        btn_returns.setIconTextGap(13);
-        btn_returns.setInheritsPopupMenu(true);
-        btn_returns.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn_returnsActionPerformed(evt);
-            }
-        });
-
-        btn_users.setBackground(new java.awt.Color(21, 101, 192));
-        btn_users.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        btn_users.setForeground(new java.awt.Color(255, 255, 255));
-        btn_users.setIcon(new javax.swing.ImageIcon(getClass().getResource("/account-multiple.png"))); // NOI18N
-        btn_users.setText("Usuarios");
-        btn_users.setBorder(javax.swing.BorderFactory.createMatteBorder(1, 13, 1, 1, new java.awt.Color(0, 0, 0)));
-        btn_users.setBorderPainted(false);
-        btn_users.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        btn_users.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        btn_users.setIconTextGap(13);
-        btn_users.setInheritsPopupMenu(true);
-        btn_users.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn_usersActionPerformed(evt);
-            }
-        });
+        // Usuarios, Préstamos y Devoluciones modules removed — buttons and handlers cleaned up
 
     btn_books.setBackground(new java.awt.Color(21, 101, 192));
     btn_books.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
@@ -380,17 +332,7 @@ public class Dashboard extends javax.swing.JFrame {
         ShowJPanel(new Principal());
     }//GEN-LAST:event_btn_prinActionPerformed
 
-    private void btn_lendsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_lendsActionPerformed
-        ShowJPanel(new Lendings());
-    }//GEN-LAST:event_btn_lendsActionPerformed
-
-    private void btn_returnsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_returnsActionPerformed
-        ShowJPanel(new Returns());
-    }//GEN-LAST:event_btn_returnsActionPerformed
-
-    private void btn_usersActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_usersActionPerformed
-        ShowJPanel(new Users());
-    }//GEN-LAST:event_btn_usersActionPerformed
+    // Removed handlers for Lendings/Returns/Users modules
 
     private void btn_reportsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_reportsActionPerformed
         // "Crear facturas" — abre el formulario/flujo para crear facturas

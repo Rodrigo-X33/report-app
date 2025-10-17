@@ -22,7 +22,9 @@ public class Database {
     private static HikariDataSource ds;
 
     // Connection parameters: keep them private and consider loading from env/config
-    private static final String DB_URL = "jdbc:postgresql://aws-1-us-east-2.pooler.supabase.com:6543/postgres";
+    // Añadimos prepareThreshold=0 para desactivar prepared statements server-side
+    // (soluciona errores como: ERROR: prepared statement "S_10" already exists)
+    private static final String DB_URL = "jdbc:postgresql://aws-1-us-east-2.pooler.supabase.com:6543/postgres?prepareThreshold=0";
     private static final String USER = "postgres.lvldoxjkilisktjsycrs";
     private static final String PASS = "VZRX^uX*T@7x";
 

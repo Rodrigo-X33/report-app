@@ -120,7 +120,7 @@
             <Component class="javax.swing.JLabel" name="appName">
               <Properties>
                 <Property name="horizontalAlignment" type="int" value="0"/>
-                <Property name="text" type="java.lang.String" value="iLib"/>
+                <Property name="text" type="java.lang.String" value="Syntek"/>
               </Properties>
             </Component>
             <Component class="javax.swing.JSeparator" name="jSeparator1">

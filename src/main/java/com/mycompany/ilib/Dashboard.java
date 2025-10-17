@@ -86,7 +86,7 @@ public class Dashboard extends javax.swing.JFrame {
         menu.setPreferredSize(new java.awt.Dimension(270, 640));
 
         appName.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        appName.setText("iLib");
+        appName.setText("Syntek");
 
         jSeparator1.setPreferredSize(new java.awt.Dimension(50, 5));
 
@@ -240,7 +240,7 @@ public class Dashboard extends javax.swing.JFrame {
         header.setBackground(new java.awt.Color(25, 118, 210));
         header.setPreferredSize(new java.awt.Dimension(744, 150));
 
-        navText.setText("Administración/Control/Biblioteca");
+        navText.setText("Administración/Control/Syntek");
 
         dateText.setText("Hoy es {dayname} {day} de {month} de {year}");
 

@@ -6,6 +6,7 @@ package com.mycompany.views;
 
 import com.mycompany.ilib.DAOSuppliersImpl;
 import com.mycompany.interfaces.DAOSuppliers;
+import com.mycompany.ilib.Dashboard;
 import java.awt.Color;
 
 /**
@@ -30,20 +31,20 @@ public class UpSuppliers extends javax.swing.JPanel {
     }
     
     private void InitStyles(){
-        title.putClientProperty("Flatlaf.styleClass", "h1");
-        title.setForeground(Color.black);
-        nameTxt.putClientProperty("JTextField.placeholderText", "Ingrese el nombre de usuario a buscar");
-        emailTxt.putClientProperty("JTextField.placeholderText", "Ingrese el email del usuario a buscar");
-        telTxt.putClientProperty("JTextField.placeholderText", "Ingrese el telefono del usuario a buscar");
+    title.putClientProperty("Flatlaf.styleClass", "h1");
+    title.setForeground(Color.black);
+    nameTxt.putClientProperty("JTextField.placeholderText", "Ingrese el nombre del proveedor");
+    emailTxt.putClientProperty("JTextField.placeholderText", "Ingrese el email del proveedor");
+    telTxt.putClientProperty("JTextField.placeholderText", "Ingrese el teléfono del proveedor");
     
        if(isEdition){
            title.setText("Editar Proveedor");
            button.setText("Guardar");
            
-                if(supplierEdition != null){
+                if (supplierEdition != null){
                     nameTxt.setText(supplierEdition.getName());
-                    emailTxt.setText(supplierEdition.getName());
-                    telTxt.setText(supplierEdition.getName());
+                    emailTxt.setText(supplierEdition.getEmail());
+                    telTxt.setText(supplierEdition.getPhone());
                 }}
       // } else{
         //   title.setText("Editar Proveedor");
@@ -233,15 +234,17 @@ public class UpSuppliers extends javax.swing.JPanel {
                 dao.modificar(supplier);
             String succesMsg = isEdition ? "modificado" : "registrado" ;  
             
-           javax.swing.JOptionPane.showMessageDialog(this, "Usuario " + succesMsg + " existosamente. \n", "AVISO", javax.swing.JOptionPane.ERROR_MESSAGE);
+           javax.swing.JOptionPane.showMessageDialog(this, "Proveedor " + succesMsg + " exitosamente.", "AVISO", javax.swing.JOptionPane.INFORMATION_MESSAGE);
           if(!isEdition){
            nameTxt.setText("");
            emailTxt.setText("");
            telTxt.setText("");
           }
+          // Tras guardar, regresar al listado de proveedores y recargar
+          Dashboard.ShowJPanel(new SuppliersList());
         } catch (Exception e) {
            String errorMsg = isEdition ? "modificar" : "registrar";
-            javax.swing.JOptionPane.showMessageDialog(this, "Ocurrió un error al " + errorMsg + " el usuario. \n", "AVISO", javax.swing.JOptionPane.ERROR_MESSAGE);
+            javax.swing.JOptionPane.showMessageDialog(this, "Ocurrió un error al " + errorMsg + " el proveedor.", "AVISO", javax.swing.JOptionPane.ERROR_MESSAGE);
             System.out.println(e.getMessage());
         }
     }//GEN-LAST:event_buttonActionPerformed

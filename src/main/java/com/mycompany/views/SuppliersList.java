@@ -2,6 +2,7 @@ package com.mycompany.views;
 
 import com.mycompany.ilib.DAOSuppliersImpl;
 import com.mycompany.interfaces.DAOSuppliers;
+import com.mycompany.ilib.Dashboard;
 import java.awt.Color;
 import javax.swing.table.DefaultTableModel;
 
@@ -83,10 +84,25 @@ public class SuppliersList extends javax.swing.JPanel {
         searchButton.addActionListener((evt) -> LoadSuppliers());
         searchField.addActionListener((evt) -> LoadSuppliers());
         addButton.addActionListener((evt) -> {
-            // TODO: open add supplier form
+            // Open create supplier form
+            Dashboard.ShowJPanel(new UpSuppliers());
         });
         editButton.addActionListener((evt) -> {
-            // TODO: open edit supplier form with selected id
+            try {
+                int row = jTable1.getSelectedRow();
+                if (row >= 0) {
+                    int id = (int) jTable1.getValueAt(row, 0);
+                    DAOSuppliers dao = new DAOSuppliersImpl();
+                    com.mycompany.models.Suppliers s = dao.getSupplierById(id);
+                    if (s != null) {
+                        Dashboard.ShowJPanel(new UpSuppliers(s));
+                    }
+                } else {
+                    javax.swing.JOptionPane.showMessageDialog(this, "Seleccione un proveedor para editar.", "Aviso", javax.swing.JOptionPane.INFORMATION_MESSAGE);
+                }
+            } catch (Exception e) {
+                System.out.println(e.getMessage());
+            }
         });
         deleteButton.addActionListener((evt) -> {
             try {

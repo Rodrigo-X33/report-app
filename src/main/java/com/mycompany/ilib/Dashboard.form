@@ -88,12 +88,12 @@
                       <EmptySpace min="40" pref="40" max="-2" attributes="0"/>
                       <Component id="jSeparator1" min="-2" pref="190" max="-2" attributes="0"/>
                   </Group>
-                  <Component id="btn_lends" max="32767" attributes="0"/>
-                  <Component id="btn_users" max="32767" attributes="0"/>
                   <Component id="btn_prin" max="32767" attributes="0"/>
-                  <Component id="btn_returns" pref="270" max="32767" attributes="0"/>
                   <Component id="btn_books" max="32767" attributes="0"/>
                   <Component id="btn_reports" max="32767" attributes="0"/>
+                  <Component id="btn_inventory" max="32767" attributes="0"/>
+                  <Component id="btn_clients" max="32767" attributes="0"/>
+                  <Component id="btn_suppliers" max="32767" attributes="0"/>
               </Group>
             </DimensionLayout>
             <DimensionLayout dim="1">
@@ -105,27 +105,12 @@
                       <Component id="jSeparator1" min="-2" pref="20" max="-2" attributes="0"/>
                       <EmptySpace min="20" pref="20" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Group type="102" attributes="0">
-                              <EmptySpace min="50" pref="50" max="-2" attributes="0"/>
-                              <Component id="btn_lends" min="-2" pref="52" max="-2" attributes="0"/>
-                          </Group>
-                          <Group type="102" attributes="0">
-                              <EmptySpace min="150" pref="150" max="-2" attributes="0"/>
-                              <Component id="btn_users" min="-2" pref="52" max="-2" attributes="0"/>
-                          </Group>
-                          <Component id="btn_prin" min="-2" pref="52" max="-2" attributes="0"/>
-                          <Group type="102" attributes="0">
-                              <EmptySpace min="100" pref="100" max="-2" attributes="0"/>
-                              <Component id="btn_returns" min="-2" pref="52" max="-2" attributes="0"/>
-                          </Group>
-                          <Group type="102" attributes="0">
-                              <EmptySpace min="200" pref="200" max="-2" attributes="0"/>
-                              <Component id="btn_books" min="-2" pref="52" max="-2" attributes="0"/>
-                          </Group>
-                          <Group type="102" attributes="0">
-                              <EmptySpace min="250" pref="250" max="-2" attributes="0"/>
-                              <Component id="btn_reports" min="-2" pref="52" max="-2" attributes="0"/>
-                          </Group>
+              <Component id="btn_prin" min="-2" pref="52" max="-2" attributes="0"/>
+              <Component id="btn_books" min="-2" pref="52" max="-2" attributes="0"/>
+              <Component id="btn_reports" min="-2" pref="52" max="-2" attributes="0"/>
+              <Component id="btn_inventory" min="-2" pref="52" max="-2" attributes="0"/>
+              <Component id="btn_clients" min="-2" pref="52" max="-2" attributes="0"/>
+              <Component id="btn_suppliers" min="-2" pref="52" max="-2" attributes="0"/>
                       </Group>
                   </Group>
               </Group>

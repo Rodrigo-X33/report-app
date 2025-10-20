@@ -76,6 +76,7 @@ public class Dashboard extends javax.swing.JFrame {
         navText = new javax.swing.JLabel();
         dateText = new javax.swing.JLabel();
         content = new javax.swing.JPanel();
+        //changes
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setMinimumSize(new java.awt.Dimension(1050, 660));
